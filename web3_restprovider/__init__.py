@@ -1,2 +1,6 @@
 from .client import RESTProvider
-from .server import RESTServer
+try:
+    from .server import RESTServer
+    from .proxy  import RESTProxy
+except ImportError:
+    pass

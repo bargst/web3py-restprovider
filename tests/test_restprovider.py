@@ -1,3 +1,4 @@
+import os
 import pytest
 from web3 import Web3
 from web3_restprovider import RESTProvider
@@ -12,6 +13,10 @@ def test_connected_invalid():
     web3 = Web3(RESTProvider('http://doesnotexist:8080'))
     assert web3.isConnected() is False
 
+def test_env_provider():
+    os.environ['WEB3_PROVIDER_URI'] = 'rest+https://api.infura.io/v1/jsonrpc/mainnet'
+    web3 = Web3(RESTProvider())
+    assert web3.isConnected() is True
 
 def test_requests(provider):
     web3 = Web3(provider)
