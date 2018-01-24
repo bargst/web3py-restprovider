@@ -1,7 +1,8 @@
 # Web3 Python Rest Provider
 
-Project composed by a RESTProvider directly usable with Web3() from web3.py python module.
-And a demo REST server implementation using Flask.
+RESTProvider directly usable with Web3 from web3.py python module.
+A demo REST server implementation using Flask.
+A demo REST proxy implementation using tinyrpc and RESTProvider.
 
 ## Setup
 
@@ -16,7 +17,16 @@ make env
 from web3 import Web3
 from web3_restprovider import RESTProvider
 
-web3 = Web3(RESTProvider('http://localhost:8080')
+web3 = Web3(RESTProvider('http://localhost:8080'))
+```
+
+It is also possible to use `WEB3_PROVIDER_URI` environment variable : `export WEB3_PROVIDER_URI="rest+http://api.infura.io/v1/jsonrpc/mainnet"`
+And then :
+```
+from web3 import Web3
+from web3_restprovider import RESTProvider
+
+web3 = Web3(RESTProvider())
 ```
 
 ## Start a RESTServer with gevent
@@ -32,6 +42,12 @@ http_server.serve_forever()
 ## Start a RESTServer with uwsgi
 ```
 uwsgi --http-socket localhost:8080 --plugin python --manage-script-name --mount /=web3_restprovider:RESTServer --virtualenv $(pipenv --venv)
+```
+
+## Start a RESTProxy with uwsgi pointing to infura restapi endpoint
+```
+export WEB3_PROVIDER_URI="rest+http://api.infura.io/v1/jsonrpc/mainnet"
+uwsgi --http-socket localhost:8545 --plugin python --manage-script-name --mount /=web3_restprovider:RESTProxy --virtualenv $(pipenv --venv)
 ```
 
 ## High Availability Deployment of RESTServer with HAProxy

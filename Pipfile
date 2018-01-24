@@ -7,14 +7,15 @@ name = "pypi"
 
 [packages]
 
-"web3" = "==4.0.0b5"
+"web3" = "==4.0.0b6"
+tinyrpc = "==0.6"
 flask = "*"
+gevent = "*"
 
 
 [dev-packages]
 
 pytest = "*"
-gevent = "*"
 
 
 [requires]
